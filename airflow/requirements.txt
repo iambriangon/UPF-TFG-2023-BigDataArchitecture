@@ -1,0 +1,6 @@
+pandas
+apache-airflow-providers-apache-spark
+deezer-python
+spotipy
+requests
+pywebhdfs

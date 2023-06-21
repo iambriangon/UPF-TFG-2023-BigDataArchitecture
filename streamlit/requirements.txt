@@ -1,0 +1,7 @@
+pandas
+numpy
+plotly
+pyhive[hive]
+streamlit
+pyspark
+string-grouper
