@@ -2,7 +2,7 @@
 ## Final Bacherlor's Degree Project by Brayan Gonzalez
 
 ### Title: Design and implementation of a Big Data architecture for data analysis
-![General Architecture](imgs/General Architecture.png)
+![General Architecture](imgs/General_Architecture.png)
 
 
 ## Prerequisites
