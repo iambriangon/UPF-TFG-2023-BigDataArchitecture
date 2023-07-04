@@ -28,89 +28,31 @@ def main_page():
     st.header('Music Charts')
     st.subheader('Final Thesis Project - 2023 UPF')
 
+    st.subheader('Run your queries interactively')
 
-def spotify_page():
-    st.header('Spotify Charts Spain')
-
-    df_date = get_query("""
-    SELECT distinct(`date`) 
-    FROM spotify
-    ORDER BY `date` DESC
-    """)
-    date = st.selectbox('Select date', df_date)
-
-    st.markdown(f'### Data statistics of {date}')
-
-    st.markdown('#### Top 200 Spotify Spain')
-    df = get_query(f'''
-    SELECT * 
-    FROM spotify
-    WHERE `date` = "{date}"
-    ORDER BY rank ASC
-    ''')
-    st.write(df)
-
-    st.markdown(f'#### Number of songs per artists in {date} chart (TOP 20)')
-    df = get_query(f'''
-    SELECT count(*) as artist_count, artist
-    FROM 
-    (
-    SELECT explode(split(artist_names, ", ")) AS artist
-    FROM spotify
-    WHERE `date` = "{date}"
-    ) AS aux
-    GROUP BY artist
-    ORDER BY artist_count DESC
-    LIMIT 20
-    '''
+    text_input = st.text_input(
+        label='Try your queries here!',
+        placeholder='Write your SQL query'
     )
-    fig = px.pie(df, values='artist_count', names='artist', title='Number of songs per artist in chart')
-    st.plotly_chart(fig)
 
-    """
-    st.markdown(f'#### Record label representation')
-    df[['group_rep_id', 'group_rep']] = group_similar_strings(
-        df['source'],
-        min_similarity=0.8
-    )
-    st.write(df)
-    """
+    if text_input:
+        st.write(get_query(text_input))
+
+    else:
+        st.write("Your query is empty!")
 
 
-def deezer_page():
-    st.header('Deezer Charts Spain')
-
-    left, right = st.columns(2)
-    with left:
-        st.write("I am left col")
-
-    with right:
-        st.write("I am right col")
-
-
-def youtube_page():
-    st.header('Youtube Charts Spain')
-
-
-def all_sources_page():
-    st.header('Youtube/Deezer/Spotify Data')
+def about_page():
+    st.header('About')
+    st.subheader('This application has been made by Brayan Gonzalez, UPF-Barcelona Student as part of his final degree project')
 
 
 if __name__ == "__main__":
     st.set_page_config(page_title='Music Chart Analysis', layout='wide')
-    page = st.sidebar.selectbox('Select page', ['Home', 'Spotify', 'Youtube', 'Deezer', 'All data sources'])
+    page = st.sidebar.selectbox('Select page', ['Home', 'About'])
 
     if page == 'Home':
         main_page()
 
-    elif page == 'Spotify':
-        spotify_page()
-
-    elif page == 'Youtube':
-        youtube_page()
-
-    elif page == 'Deezer':
-        deezer_page()
-
     else:
-        all_sources_page()
+        about_page()

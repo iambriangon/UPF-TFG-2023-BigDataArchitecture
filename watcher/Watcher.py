@@ -27,6 +27,11 @@ class Watcher:
             exit(1)
 
     def watch(self):
+        # Remove .gitkeep file, used to keep the dir in repository
+        if '.gitkeep' in os.path.exists(self.path + '/.gitkeep'):
+            os.remove(self.path + '/.gitkeep')
+
+        # Start monitoring
         while True:
             self.monitor()
             time.sleep(self.sleep_time)

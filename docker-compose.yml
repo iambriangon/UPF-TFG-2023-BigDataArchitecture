@@ -100,6 +100,8 @@ services:
       - PYTHONUNBUFFERED=1
     volumes:
       - ./watcher/files:/opt/watcher/files
+      - ./watcher/pipeline.py:/opt/watcher/pipeline.py
+      - ./watcher/upload:/opt/watcher/upload
 
   visualization:
     build:
